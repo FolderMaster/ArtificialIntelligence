@@ -17,6 +17,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "bionic", "bionic", "{F3B010
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "cognitive", "cognitive", "{975135E3-EEF5-43BC-8000-DE89B1A327EF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrameSystem", "src\approaches\cognitive\FrameSystem\FrameSystem.csproj", "{AFCC354E-B1EA-4FB6-9EB5-2954C1AF6FDA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +33,10 @@ Global
 		{6F805055-4AA8-46BA-AB94-DDB9E4497C15}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6F805055-4AA8-46BA-AB94-DDB9E4497C15}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6F805055-4AA8-46BA-AB94-DDB9E4497C15}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AFCC354E-B1EA-4FB6-9EB5-2954C1AF6FDA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AFCC354E-B1EA-4FB6-9EB5-2954C1AF6FDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AFCC354E-B1EA-4FB6-9EB5-2954C1AF6FDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AFCC354E-B1EA-4FB6-9EB5-2954C1AF6FDA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -42,6 +48,7 @@ Global
 		{94F6826F-AB78-429C-A307-167B002104D0} = {4EF4E265-1E08-47F3-A1D5-7CAB571D4C1B}
 		{F3B010AB-F059-431A-942F-A0D52ABA289D} = {4EF4E265-1E08-47F3-A1D5-7CAB571D4C1B}
 		{975135E3-EEF5-43BC-8000-DE89B1A327EF} = {4EF4E265-1E08-47F3-A1D5-7CAB571D4C1B}
+		{AFCC354E-B1EA-4FB6-9EB5-2954C1AF6FDA} = {975135E3-EEF5-43BC-8000-DE89B1A327EF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {94364D79-3EAB-4AA6-B04F-A228F95219B3}

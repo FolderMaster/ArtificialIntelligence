@@ -5,7 +5,7 @@ using NeuralNetworks.Trainers.Costs;
 
 var neuronNetwork = new NeuralNetwork(2);
 neuronNetwork.AddLayer(2, TanhActivator.Current);
-neuronNetwork.AddLayer(4, ClippedReLuActivator.Current);
+neuronNetwork.AddLayer(4, SoftPlusActivator.Current);
 Print(neuronNetwork);
 
 var data = GetData(10000);
