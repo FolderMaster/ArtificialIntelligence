@@ -1,4 +1,4 @@
-﻿namespace ProductionSystem
+﻿namespace ProductionSystems.Options
 {
     public enum OutputMode
     {

@@ -1,4 +1,4 @@
-﻿namespace ProductionSystem
+﻿namespace ProductionSystems.Options
 {
     public class ExecutionOptions
     {
@@ -8,14 +8,18 @@
 
         public OutputDataMode OutputDataMode { get; set; }
 
+        public IEnumerable<string>? Targets { get; set; }
+
         public ExecutionOptions() { }
 
         public ExecutionOptions(ExecutionMode executionMode,
-            OutputMode outputMode, OutputDataMode outputDataMode)
+            OutputMode outputMode, OutputDataMode outputDataMode,
+            IEnumerable<string>? targets)
         {
             ExecutionMode = executionMode;
             OutputMode = outputMode;
             OutputDataMode = outputDataMode;
+            Targets = targets;
         }
     }
 }

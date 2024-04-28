@@ -1,8 +1,8 @@
-﻿namespace ProductionSystem
+﻿namespace ProductionSystems.Options
 {
     public enum ExecutionMode
     {
-        StandardMode,
+        StandardSearch,
         RuleWithLeastFactsSearch,
         TreeTraversal
     }

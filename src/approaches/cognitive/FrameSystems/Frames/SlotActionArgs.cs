@@ -1,4 +1,6 @@
-﻿namespace FrameSystem
+﻿using FrameSystem.Logger;
+
+namespace FrameSystem.Frames
 {
     public class SlotActionArgs
     {
@@ -6,14 +8,17 @@
 
         public Slot Slot { get; private set; }
 
-        public object? NewValue { get; private set; }
+        public object? Value { get; private set; }
+
+        public ILogger? Logger { get; set; }
 
         public SlotActionArgs(Frame frame, Slot slot,
-            object? newValue)
+            object? value, ILogger? logger)
         {
             Frame = frame;
             Slot = slot;
-            NewValue = newValue;
+            Value = value;
+            Logger = logger;
         }
     }
 }

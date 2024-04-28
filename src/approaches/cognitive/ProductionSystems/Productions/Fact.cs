@@ -1,4 +1,4 @@
-﻿namespace ProductionSystem
+﻿namespace ProductionSystems.Productions
 {
     public class Fact
     {
