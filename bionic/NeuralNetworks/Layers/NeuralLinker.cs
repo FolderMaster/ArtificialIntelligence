@@ -1,5 +1,6 @@
-﻿using NeuralNetworks.Neurons;
-using System.Collections;
+﻿using System.Collections;
+
+using NeuralNetworks.Neurons;
 
 namespace NeuralNetworks.Layers
 {
@@ -11,7 +12,7 @@ namespace NeuralNetworks.Layers
 
         public IEnumerable<double> InputValues => _inputValues;
 
-        public INeuron[] InputNeurons { get; private set; }
+        public IList<INeuron> InputNeurons { get; private set; }
 
         public IEnumerable<IOutputNeuron> OutputNeurons { get; private set; }
 
@@ -20,7 +21,7 @@ namespace NeuralNetworks.Layers
         {
             InputNeurons = inputNeurons.ToArray();
             OutputNeurons = outputNeurons;
-            _neuronsFlags = new BitArray(InputNeurons.Length, false);
+            _neuronsFlags = new BitArray(InputNeurons.Count, false);
             _inputValues = new double[InputNeurons.Count()];
             foreach (var neuron in InputNeurons)
             {
@@ -31,7 +32,7 @@ namespace NeuralNetworks.Layers
         private void Neuron_Activated(object? sender, double e)
         {
             var neuron = sender as INeuron;
-            var index = Array.IndexOf(InputNeurons, neuron);
+            var index = InputNeurons.IndexOf(neuron);
             _inputValues[index] = e;
             _neuronsFlags[index] = true;
             if (_neuronsFlags.HasAllSet())

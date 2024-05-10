@@ -8,7 +8,7 @@ namespace NeuralNetworks.Neurons
 
         public double Bias { get; set; }
 
-        public double[] Weights { get; set; }
+        public IList<double> Weights { get; set; }
 
         public double OutputValue { get; private set; }
 

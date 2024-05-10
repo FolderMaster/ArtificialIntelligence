@@ -3,13 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34723.18
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeuralNetworks", "src\approaches\bionic\NeuralNetworks\NeuralNetworks.csproj", "{CCABAF9D-257E-4DB4-B2DE-245BC83E94A7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeuralNetworks", "bionic\NeuralNetworks\NeuralNetworks.csproj", "{CCABAF9D-257E-4DB4-B2DE-245BC83E94A7}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{AD8E880E-7856-4E60-83E9-4DE735A88284}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductionSystems", "src\approaches\cognitive\ProductionSystems\ProductionSystems.csproj", "{6F805055-4AA8-46BA-AB94-DDB9E4497C15}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "approches", "approches", "{4EF4E265-1E08-47F3-A1D5-7CAB571D4C1B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductionSystems", "cognitive\ProductionSystems\ProductionSystems.csproj", "{6F805055-4AA8-46BA-AB94-DDB9E4497C15}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "social", "social", "{94F6826F-AB78-429C-A307-167B002104D0}"
 EndProject
@@ -17,9 +13,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "bionic", "bionic", "{F3B010
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "cognitive", "cognitive", "{975135E3-EEF5-43BC-8000-DE89B1A327EF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FrameSystems", "src\approaches\cognitive\FrameSystems\FrameSystems.csproj", "{AFCC354E-B1EA-4FB6-9EB5-2954C1AF6FDA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FrameSystems", "cognitive\FrameSystems\FrameSystems.csproj", "{AFCC354E-B1EA-4FB6-9EB5-2954C1AF6FDA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SemanticNetworks", "src\approaches\cognitive\SemanticNetworks\SemanticNetworks.csproj", "{5249901B-121C-472A-ABEC-B47C5086EB45}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SemanticNetworks", "cognitive\SemanticNetworks\SemanticNetworks.csproj", "{5249901B-121C-472A-ABEC-B47C5086EB45}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -50,10 +46,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{CCABAF9D-257E-4DB4-B2DE-245BC83E94A7} = {F3B010AB-F059-431A-942F-A0D52ABA289D}
 		{6F805055-4AA8-46BA-AB94-DDB9E4497C15} = {975135E3-EEF5-43BC-8000-DE89B1A327EF}
-		{4EF4E265-1E08-47F3-A1D5-7CAB571D4C1B} = {AD8E880E-7856-4E60-83E9-4DE735A88284}
-		{94F6826F-AB78-429C-A307-167B002104D0} = {4EF4E265-1E08-47F3-A1D5-7CAB571D4C1B}
-		{F3B010AB-F059-431A-942F-A0D52ABA289D} = {4EF4E265-1E08-47F3-A1D5-7CAB571D4C1B}
-		{975135E3-EEF5-43BC-8000-DE89B1A327EF} = {4EF4E265-1E08-47F3-A1D5-7CAB571D4C1B}
 		{AFCC354E-B1EA-4FB6-9EB5-2954C1AF6FDA} = {975135E3-EEF5-43BC-8000-DE89B1A327EF}
 		{5249901B-121C-472A-ABEC-B47C5086EB45} = {975135E3-EEF5-43BC-8000-DE89B1A327EF}
 	EndGlobalSection

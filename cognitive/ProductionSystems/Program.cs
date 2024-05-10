@@ -40,13 +40,19 @@ productionSystem.Rules.Add(new MathRule(["c", "gamma", "a"], "alpha",
 productionSystem.Rules.Add(new MathRule(["c", "gamma", "alpha"], "a",
     "c * sin(alpha) / sin(gamma)"));
 
-productionSystem.Rules.Add(new MathRule(["alpha", "beta"], "gamma", "pi - (alpha + beta)"));
-productionSystem.Rules.Add(new MathRule(["alpha", "gamma"], "beta", "pi - (alpha + gamma)"));
-productionSystem.Rules.Add(new MathRule(["gamma", "beta"], "alpha", "pi - (beta + gamma)"));
+productionSystem.Rules.Add(new MathRule(["alpha", "beta"], "gamma",
+    "pi - (alpha + beta)"));
+productionSystem.Rules.Add(new MathRule(["alpha", "gamma"], "beta",
+    "pi - (alpha + gamma)"));
+productionSystem.Rules.Add(new MathRule(["gamma", "beta"], "alpha",
+    "pi - (beta + gamma)"));
 
-productionSystem.Rules.Add(new MathRule(["a", "b", "gamma"], "s", "1/2 * a * b * sin(gamma)"));
-productionSystem.Rules.Add(new MathRule(["b", "c", "alpha"], "s", "1/2 * b * c * sin(alpha)"));
-productionSystem.Rules.Add(new MathRule(["a", "c", "beta"], "s", "1/2 * a * c * sin(beta)"));
+productionSystem.Rules.Add(new MathRule(["a", "b", "gamma"], "s",
+    "1/2 * a * b * sin(gamma)"));
+productionSystem.Rules.Add(new MathRule(["b", "c", "alpha"], "s",
+    "1/2 * b * c * sin(alpha)"));
+productionSystem.Rules.Add(new MathRule(["a", "c", "beta"], "s",
+    "1/2 * a * c * sin(beta)"));
 productionSystem.Rules.Add(new MathRule(["p", "a", "b", "c"], "s",
     "sqrt(p/2 * (p/2 - a) * (p/2 - b) * (p/2 - c))"));
 

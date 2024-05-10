@@ -80,6 +80,11 @@ namespace ProductionSystems
             {
                 result.AddRange(facts.Where((f) =>
                     options.Targets.Any((t) => t == f.Name)));
+                if (options.ExecutionMode.HasFlag
+                    (ExecutionMode.TreeTraversal))
+                {
+                    // Clear useless rules
+                }
             }
             if (options.ExecutionMode.HasFlag
                 (ExecutionMode.RuleWithLeastFactsSearch))
