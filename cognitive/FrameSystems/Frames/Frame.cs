@@ -41,10 +41,7 @@ namespace FrameSystem.Frames
         public object? NeedValue(string name)
         {
             var slot = Slots.FirstOrDefault((s) => s.Name == name);
-            if (slot == null)
-            {
-                throw new InvalidOperationException();
-            }
+            ArgumentNullException.ThrowIfNull(slot, nameof(slot));
             var value = (object?)null;
             if (slot.NeedFunction != null)
             {
@@ -82,10 +79,7 @@ namespace FrameSystem.Frames
         public void UpdateValue(string name, object? value)
         {
             var slot = Slots.FirstOrDefault((s) => s.Name == name);
-            if (slot == null)
-            {
-                throw new InvalidOperationException();
-            }
+            ArgumentNullException.ThrowIfNull(slot, nameof(slot));
             var oldValue = slot.Value;
             if (slot.BeforeUpdateFunction != null)
             {

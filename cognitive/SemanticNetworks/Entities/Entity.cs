@@ -1,13 +1,17 @@
-﻿using SemanticNetwork.Relationships;
+﻿using SemanticNetworks.Relationships;
 
-namespace SemanticNetwork.Entities
+namespace SemanticNetworks.Entities
 {
     public class Entity : IEntity
     {
-        public string Name { get; private set; }
+        private readonly List<IRelationship> _relationships = new();
 
-        public IList<IRelationship> Relationships => throw new NotImplementedException();
+        public string? Name { get; private set; }
 
-        public Entity(string name) => Name = name;
+        public IList<IRelationship> Relationships => _relationships;
+
+        public Entity(string? name = null) => Name = name;
+
+        public override string ToString() => $"Entity {Name}";
     }
 }

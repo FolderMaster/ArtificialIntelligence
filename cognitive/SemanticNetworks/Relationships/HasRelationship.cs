@@ -1,9 +1,9 @@
-﻿using SemanticNetwork.Entities;
-
-namespace SemanticNetwork.Relationships
+﻿namespace SemanticNetworks.Relationships
 {
-    public class HasRelationship : IRelationship
+    public class HasRelationship : BaseRelationship
     {
-        public IList<IEntity> Entities => throw new NotImplementedException();
+        private static readonly string _name = "Has";
+
+        public override string? Name => _name;
     }
 }

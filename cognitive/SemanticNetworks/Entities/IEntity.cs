@@ -1,10 +1,10 @@
-﻿using SemanticNetwork.Relationships;
+﻿using SemanticNetworks.Relationships;
 
-namespace SemanticNetwork.Entities
+namespace SemanticNetworks.Entities
 {
     public interface IEntity
     {
-        public string Name { get; }
+        public string? Name { get; }
 
         public IList<IRelationship> Relationships { get; }
     }
