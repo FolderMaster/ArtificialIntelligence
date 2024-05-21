@@ -18,5 +18,8 @@ namespace ProductionSystems.Productions
 
         public Fact CalculateFact(IEnumerable<Fact> inputFacts, ILogger? logger = null) =>
             new Fact(OutputFactName, Calculation(new RuleCalculationArgs(inputFacts, logger)));
+
+        public override string ToString() => 
+            $"Rule(Output = {OutputFactName}; Inputs: {string.Join(", ", InputFactNames)})";
     }
 }

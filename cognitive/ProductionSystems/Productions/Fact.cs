@@ -18,6 +18,7 @@
             Value = value;
         }
 
-        public override string ToString() => $"Name = {Name}, Value = {Value}";
+        public override string ToString() =>
+            $"Fact(Name = {Name}, Value = {Value})";
     }
 }

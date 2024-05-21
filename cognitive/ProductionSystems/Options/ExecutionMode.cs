@@ -6,6 +6,6 @@
         StandardSearch = 0,
         RuleWithLeastFactsSearch = 1 << 0,
         RemoveUselessRules = 1 << 1,
-        TreeTraversal = 1 << 2
+        BackwardChaining = 1 << 2
     }
 }
