@@ -103,9 +103,7 @@ namespace ProductionSystems
             }
             else
             {
-                foreach (var rule in rules.
-                    Where((r) => !result.Any
-                    ((t) => t.Name == r.OutputFactName)))
+                foreach (var rule in GetRules(rules, facts))
                 {
                     neededRules.Push(rule);
                 }
@@ -122,6 +120,9 @@ namespace ProductionSystems
         private bool IsTargetFactName(List<Fact> facts,
             IEnumerable<string> targets, string target) =>
             !targets.Contains(target) && !facts.Any((r) => r.Name == target);
+
+        private IEnumerable<Rule> GetRules(List<Rule> rules, List<Fact> facts) =>
+            rules.Where((r) => !facts.Any((t) => t.Name == r.OutputFactName));
 
         private void ExecuteForwardChaining(List<Fact> facts,
             List<Fact> result, List<Rule> rules, ExecutionOptions options)

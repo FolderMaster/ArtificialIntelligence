@@ -65,17 +65,17 @@ foreach (var value in productionSystem.Facts)
 {
     Console.WriteLine(value);
 }
-var targets = new string[] { "gamma", "c", "a" };
+//var targets = new string[] { "gamma", "c", "a" };
 Console.WriteLine("Targets:");
-foreach (var target in targets)
+/**foreach (var target in targets)
 {
     Console.WriteLine(target);
-}
+}**/
 Console.WriteLine("Execution:");
 var values = productionSystem.Execute(new ExecutionOptions
     (ExecutionMode.RuleWithLeastFactsSearch | ExecutionMode.RemoveUselessRules |
     ExecutionMode.BackwardChaining, OutputMode.StandardOutput |
-    OutputMode.WithAdditionalOutput, targets));
+    OutputMode.WithAdditionalOutput, null));
 Console.WriteLine("Deduced facts:");
 foreach (var value in values)
 {
