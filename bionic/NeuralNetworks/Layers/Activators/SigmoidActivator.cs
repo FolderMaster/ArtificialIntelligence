@@ -5,13 +5,24 @@
         public static readonly SigmoidActivator
             Current = new SigmoidActivator();
 
-        public double Function(double value) =>
+        private double Function(double value) =>
             1.0 / (1 + Math.Exp(-value));
 
-        public double Derivative(double value)
+        public IEnumerable<double> Function(IEnumerable<double> values)
         {
-            double a = Function(value);
-            return a * (1 - a);
+            foreach (var value in values)
+            {
+                yield return Function(value);
+            }
+        }
+
+        public IEnumerable<double> Derivative(IEnumerable<double> values)
+        {
+            foreach (var value in values)
+            {
+                var a = Function(value);
+                yield return a * (1 - a);
+            }
         }
     }
 }

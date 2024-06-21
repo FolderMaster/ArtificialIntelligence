@@ -44,7 +44,7 @@ namespace NeuralNetworks.Trainers
                     lock (NeuralNetwork)
                     {
                         prediction = NeuralNetwork.Predict(d.First);
-                        outputsData = ShotOutputsData();
+                        outputsData = ShotValues();
                     }
                     totalError += Cost.Function(prediction, d.Second);
                     BackPropagate(d.Second, layersGradientsData, outputsData);
@@ -73,7 +73,7 @@ namespace NeuralNetworks.Trainers
             return result;
         }
 
-        private IEnumerable<IEnumerable<double>> ShotOutputsData()
+        private IEnumerable<IEnumerable<double>> ShotValues()
         {
             var layers = NeuralNetwork.OutputLayers;
             var layersCount = layers.Count();
@@ -112,13 +112,12 @@ namespace NeuralNetworks.Trainers
         {
             var count = layer.NeuronsCount;
             var result = new double[count];
+            var activation = layer.Activator.Derivative(outputsData);
             for (int i = 0; i < count; i++)
             {
                 var cost = Cost.Derivative(outputsData.ElementAt(i),
                     target.ElementAt(i));
-                var activation = layer.Activator.
-                    Derivative(outputsData.ElementAt(i));
-                result[i] = cost * activation;
+                result[i] = cost * activation.ElementAt(i);
             }
             lock (gradientsData)
             {
@@ -154,17 +153,16 @@ namespace NeuralNetworks.Trainers
             IEnumerable<double> outputsData)
         {
             var result = new double[hiddenLayer.NeuronsCount];
+            var activation = hiddenLayer.Activator.Derivative(outputsData);
             for (int i = 0; i < hiddenLayer.NeuronsCount; i++)
             {
-                var activation = hiddenLayer.Activator.
-                    Derivative(outputsData.ElementAt(i));
                 var weights = new double[nextLayer.NeuronsCount];
                 for (int j = 0; j < nextLayer.NeuronsCount; j++)
                 {
                     weights[j] = nextLayer.Weights.ElementAt(j).ElementAt(i);
                 }
                 var cost = GetCostSecondDerivative(weights, gradients);
-                result[i] = cost * activation;
+                result[i] = cost * activation.ElementAt(i);
             }
             for (int i = 0; i < hiddenLayer.NeuronsCount; ++i)
             {

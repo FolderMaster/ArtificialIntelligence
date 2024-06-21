@@ -55,16 +55,6 @@ namespace NeuralNetworks.Layers
             previousLayer.Activated += PreviousLayer_Activated;
         }
 
-        private void CalculateOutputValue(IEnumerable<double> values, int index)
-        {
-            var weightedValues = new double[LinksCount];
-            for (var i = 0; i < LinksCount; ++i)
-            {
-                weightedValues[i] = _weights[index][i] * values.ElementAt(i);
-            }
-            _values[index] = Activator.Function(weightedValues.Sum() + _biases[index]);
-        }
-
         private double GenerateRandomValue(Random random) =>
             random.NextDouble() * random.Next(-1, 2);
 
@@ -72,8 +62,14 @@ namespace NeuralNetworks.Layers
         {
             for (var i = 0; i < NeuronsCount; ++i)
             {
-                CalculateOutputValue(values, i);
+                var weightedValues = new double[LinksCount];
+                for (var j = 0; j < LinksCount; ++j)
+                {
+                    weightedValues[j] = _weights[i][j] * values.ElementAt(j);
+                }
+                _values[i] = weightedValues.Sum() + _biases[i];
             }
+            Array.Copy(Activator.Function(_values).ToArray(), _values, NeuronsCount);
             Activated?.Invoke(this, _values);
         }
     }

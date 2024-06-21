@@ -2,8 +2,8 @@
 {
     public interface IActivator
     {
-        public double Function(double value);
+        public IEnumerable<double> Function(IEnumerable<double> values);
 
-        public double Derivative(double value);
+        public IEnumerable<double> Derivative(IEnumerable<double> values);
     }
 }

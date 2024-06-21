@@ -5,13 +5,21 @@
         public static readonly SoftPlusActivator
             Current = new SoftPlusActivator();
 
-        public double Function(double value) =>
-            Math.Log(1 + Math.Exp(value));
-
-        public double Derivative(double value)
+        public IEnumerable<double> Function(IEnumerable<double> values)
         {
-            double a = Math.Exp(value);
-            return a / (1 + a);
+            foreach (var value in values)
+            {
+                yield return Math.Log(1 + Math.Exp(value));
+            }
+        }
+
+        public IEnumerable<double> Derivative(IEnumerable<double> values)
+        {
+            foreach (var value in values)
+            {
+                var a = Math.Exp(value);
+                yield return a / (1 + a);
+            }
         }
     }
 }

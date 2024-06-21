@@ -5,7 +5,7 @@ using NeuralNetworks.Trainers.Costs;
 
 var neuronNetwork = new NeuralNetwork(2);
 neuronNetwork.AddLayer(2, TanhActivator.Current);
-neuronNetwork.AddLayer(4, SoftPlusActivator.Current);
+neuronNetwork.AddLayer(4, SoftMaxActivator.Current);
 Print(neuronNetwork);
 
 var data = GetData(10000);
@@ -19,10 +19,10 @@ var trainer = new BackPropagationNeuralNetworkTrainer()
     Target = target,
     Input = input,
     NeuralNetwork = neuronNetwork,
-    LearningRate = 1,
-    EpochsCount = 1000,
-    MaximumError = 0.005,
-    Cost = MSECost.Current
+    LearningRate = 0.05,
+    EpochsCount = null,
+    MaximumError = 0.01,
+    Cost = CrossEntropyCost.Current
 };
 trainer.Train();
 Print(neuronNetwork);

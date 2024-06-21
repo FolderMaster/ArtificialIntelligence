@@ -7,10 +7,20 @@
         public static readonly PReLuActivator
             Current = new PReLuActivator();
 
-        public double Function(double value) =>
-            double.Max(a * value, 0);
+        public IEnumerable<double> Function(IEnumerable<double> values)
+        {
+            foreach (var value in values)
+            {
+                yield return double.Max(a * value, 0);
+            }
+        }
 
-        public double Derivative(double value) =>
-            value > 0 ? a : 0;
+        public IEnumerable<double> Derivative(IEnumerable<double> values)
+        {
+            foreach (var value in values)
+            {
+                yield return value > 0 ? a : 0;
+            }
+        }
     }
 }

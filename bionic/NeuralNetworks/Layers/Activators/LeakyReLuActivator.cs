@@ -7,10 +7,20 @@
         public static readonly LeakyReLuActivator
             Current = new LeakyReLuActivator();
 
-        public double Function(double value) =>
-            value > 0 ? value : a * value;
+        public IEnumerable<double> Function(IEnumerable<double> values)
+        {
+            foreach (var value in values)
+            {
+                yield return value > 0 ? value : a * value;
+            }
+        }
 
-        public double Derivative(double value) =>
-            value > 0 ? 1 : a;
+        public IEnumerable<double> Derivative(IEnumerable<double> values)
+        {
+            foreach (var value in values)
+            {
+                yield return value > 0 ? 1 : a;
+            }
+        }
     }
 }

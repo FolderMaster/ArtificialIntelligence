@@ -5,13 +5,21 @@
         public static readonly TanhActivator
             Current = new TanhActivator();
 
-        public double Function(double value) =>
-            Math.Tanh(value);
-
-        public double Derivative(double value)
+        public IEnumerable<double> Function(IEnumerable<double> values)
         {
-            var a = Math.Tanh(value);
-            return 1 - a * a;
+            foreach (var value in values)
+            {
+                yield return Math.Tanh(value);
+            }
+        }
+
+        public IEnumerable<double> Derivative(IEnumerable<double> values)
+        {
+            foreach (var value in values)
+            {
+                var a = Math.Tanh(value);
+                yield return 1 - a * a;
+            }
         }
     }
 }

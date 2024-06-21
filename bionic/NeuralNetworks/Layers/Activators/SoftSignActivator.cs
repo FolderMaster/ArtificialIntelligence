@@ -5,13 +5,21 @@
         public static readonly SoftSignActivator
             Current = new SoftSignActivator();
 
-        public double Function(double value) =>
-            value / (1 + Math.Abs(value));
-
-        public double Derivative(double value)
+        public IEnumerable<double> Function(IEnumerable<double> values)
         {
-            var d = 1 + Math.Abs(value);
-            return 1 / (d * d);
+            foreach (var value in values)
+            {
+                yield return value / (1 + Math.Abs(value));
+            }
+        }
+
+        public IEnumerable<double> Derivative(IEnumerable<double> values)
+        {
+            foreach (var value in values)
+            {
+                var d = 1 + Math.Abs(value);
+                yield return 1 / (d * d);
+            }
         }
     }
 }

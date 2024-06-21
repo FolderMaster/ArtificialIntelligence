@@ -2,7 +2,7 @@
 {
     public class CrossEntropyCost : ICost
     {
-        public const double e = 1e-10;
+        public const double e = 1e-3;
 
         public static readonly CrossEntropyCost Current =
             new CrossEntropyCost();
@@ -16,8 +16,9 @@
             {
                 var p = prediction.ElementAt(i);
                 var t = target.ElementAt(i);
-                cost -= t * Math.Log(p > 0 ? p : e) + (1 - t) *
+                var r = t * Math.Log(p > 0 ? p : e) + (1 - t) *
                     Math.Log(p < 1 ? 1 - p : e);
+                cost -= double.IsNaN(r) ? 0 : r;
             }
             return cost / count;
         }

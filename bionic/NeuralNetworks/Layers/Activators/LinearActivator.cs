@@ -5,8 +5,20 @@
         public static readonly LinearActivator
             Current = new LinearActivator();
 
-        public double Function(double value) => value;
+        public IEnumerable<double> Function(IEnumerable<double> values)
+        {
+            foreach (var value in values)
+            {
+                yield return value;
+            }
+        }
 
-        public double Derivative(double value) => 1;
+        public IEnumerable<double> Derivative(IEnumerable<double> values)
+        {
+            foreach (var value in values)
+            {
+                yield return 1;
+            }
+        }
     }
 }
