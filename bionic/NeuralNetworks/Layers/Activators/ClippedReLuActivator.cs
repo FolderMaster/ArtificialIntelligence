@@ -1,6 +1,6 @@
-﻿namespace NeuralNetworks.Neurons.Activators
+﻿namespace NeuralNetworks.Layers.Activators
 {
-    class ClippedReLuActivator: IActivator
+    class ClippedReLuActivator : IActivator
     {
         public static readonly ClippedReLuActivator
             Current = new ClippedReLuActivator();

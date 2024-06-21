@@ -1,21 +1,20 @@
-﻿using NeuralNetworks.Neurons;
-
-namespace NeuralNetworks.Layers
+﻿namespace NeuralNetworks.Layers
 {
-    public class InputNeuralLayer : INeuralLayer
+    public class InputNeuralLayer : IInputNeuralLayer
     {
-        public IEnumerable<IInputNeuron> InputNeurons { get; private set; }
+        public int NeuronsCount { get; private set; }
 
-        public IEnumerable<INeuron> Neurons => InputNeurons;
+        public IEnumerable<double> Values { get; private set; }
 
-        public InputNeuralLayer(int neuronCount)
+        public event EventHandler<IEnumerable<double>>? Activated;
+
+        public InputNeuralLayer(int neuronCount) =>
+            NeuronsCount = neuronCount;
+
+        public void Activate(IEnumerable<double> values)
         {
-            var neurons = new IInputNeuron[neuronCount];
-            for (int i = 0; i < neuronCount; i++)
-            {
-                neurons[i] = new InputNeuron();
-            }
-            InputNeurons = neurons;
+            Values = values;
+            Activated?.Invoke(this, Values);
         }
     }
 }

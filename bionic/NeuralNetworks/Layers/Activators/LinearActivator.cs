@@ -1,4 +1,4 @@
-﻿namespace NeuralNetworks.Neurons.Activators
+﻿namespace NeuralNetworks.Layers.Activators
 {
     internal class LinearActivator : IActivator
     {

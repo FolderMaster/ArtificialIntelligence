@@ -1,4 +1,4 @@
-﻿namespace NeuralNetworks.Neurons.Activators
+﻿namespace NeuralNetworks.Layers.Activators
 {
     public class PReLuActivator : IActivator
     {

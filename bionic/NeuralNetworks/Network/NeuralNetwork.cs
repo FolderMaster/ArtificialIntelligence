@@ -1,5 +1,5 @@
 ﻿using NeuralNetworks.Layers;
-using NeuralNetworks.Neurons.Activators;
+using NeuralNetworks.Layers.Activators;
 
 namespace NeuralNetworks.Network
 {
@@ -22,7 +22,7 @@ namespace NeuralNetworks.Network
             {
                 activator = SigmoidActivator.Current;
             }
-            if (OutputLayers.Count() == 0)
+            if (!OutputLayers.Any())
             {
                 _outputLayers.Add(new OutputNeuralLayer(neuronCount, activator, InputLayer));
             }
@@ -36,19 +36,12 @@ namespace NeuralNetworks.Network
         public IEnumerable<double> Predict(IEnumerable<double> values)
         {
             ArgumentNullException.ThrowIfNull(values);
-
-            foreach (var item in InputLayer.InputNeurons.Zip(values))
+            if(!_outputLayers.Any())
             {
-                item.First.Activate(item.Second);
+                throw new InvalidOperationException();
             }
-            var lastNeurons = OutputLayers.Last().Neurons;
-            var lastNeuronsCount = lastNeurons.Count();
-            var result = new double[lastNeuronsCount];
-            for (var i = 0; i < lastNeuronsCount; ++i)
-            {
-                result[i] = lastNeurons.ElementAt(i).OutputValue;
-            }
-            return result;
+            InputLayer.Activate(values);
+            return OutputLayers.Last().Values;
         }
     }
 }

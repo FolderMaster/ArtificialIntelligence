@@ -8,11 +8,11 @@ namespace NeuralNetworks.Trainers
     {
         public ICost Cost { get; set; } = MSECost.Current;
 
-        public NeuralNetwork NeuralNetwork { get; set; }
+        public NeuralNetwork? NeuralNetwork { get; set; }
 
-        public IEnumerable<IEnumerable<double>> Input { get; set; }
+        public IEnumerable<IEnumerable<double>>? Input { get; set; }
 
-        public IEnumerable<IEnumerable<double>> Target { get; set; }
+        public IEnumerable<IEnumerable<double>>? Target { get; set; }
 
         public double LearningRate { get; set; } = 0.05;
 
@@ -20,9 +20,9 @@ namespace NeuralNetworks.Trainers
 
         /** public double Regularization { get; set; } = 0.15; **/
 
-        public double EpochsCount { get; set; } = 100;
+        public double? EpochsCount { get; set; } = 100;
 
-        public double MaximumError { get; set; } = 0.01;
+        public double? MaximumError { get; set; } = 0.01;
 
         public void Train()
         {
@@ -34,7 +34,7 @@ namespace NeuralNetworks.Trainers
             var data = Input.Zip(Target).ToArray();
             var dataCount = data.Length;
             var totalError = 1d;
-            for(var e = 0; totalError > MaximumError && e < EpochsCount; ++e)
+            for(var e = 0; CheckEpochNecessity(totalError, e); ++e)
             {
                 totalError = 0d;
                 Parallel.ForEach(data, (d) =>
@@ -65,8 +65,8 @@ namespace NeuralNetworks.Trainers
             for(int i = 0; i < layersCount; ++i)
             {
                 var layer = layers.ElementAt(i);
-                var outputNeuronsCount = layer.OutputNeurons.Count();
-                var inputNeuronsCount = layer.Linker.InputNeurons.Count();
+                var outputNeuronsCount = layer.NeuronsCount;
+                var inputNeuronsCount = layer.LinksCount;
                 result[i] = new GradientsData(inputNeuronsCount,
                     outputNeuronsCount);
             }
@@ -78,16 +78,10 @@ namespace NeuralNetworks.Trainers
             var layers = NeuralNetwork.OutputLayers;
             var layersCount = layers.Count();
             var result = new double[layersCount + 1][];
+            result[0] = NeuralNetwork.InputLayer.Values.ToArray();
             for (int i = 0; i < layersCount; ++i)
             {
-                result[i] = layers.ElementAt(i).Linker.InputValues.ToArray();
-            }
-            var lastLayerNeurons = layers.Last().OutputNeurons;
-            var lastLayerNeuronsCount = lastLayerNeurons.Count();
-            result[layersCount] = new double[lastLayerNeuronsCount];
-            for (int i = 0; i < lastLayerNeuronsCount; ++i)
-            {
-                result[layersCount][i] = lastLayerNeurons.ElementAt(i).OutputValue;
+                result[i + 1] = layers.ElementAt(i).Values.ToArray();
             }
             return result;
         }
@@ -116,14 +110,13 @@ namespace NeuralNetworks.Trainers
             IEnumerable<double> target, GradientsData gradientsData,
             IEnumerable<double> inputsData, IEnumerable<double> outputsData)
         {
-            var count = layer.OutputNeurons.Count();
+            var count = layer.NeuronsCount;
             var result = new double[count];
             for (int i = 0; i < count; i++)
             {
-                var neuron = layer.OutputNeurons.ElementAt(i);
                 var cost = Cost.Derivative(outputsData.ElementAt(i),
                     target.ElementAt(i));
-                var activation = neuron.Activator.
+                var activation = layer.Activator.
                     Derivative(outputsData.ElementAt(i));
                 result[i] = cost * activation;
             }
@@ -160,33 +153,26 @@ namespace NeuralNetworks.Trainers
             GradientsData gradientsData, IEnumerable<double> inputsData,
             IEnumerable<double> outputsData)
         {
-            var inputNeurons = hiddenLayer.OutputNeurons;
-            var inputNeuronCount = hiddenLayer.OutputNeurons.Count();
-            var outputNeurons = nextLayer.OutputNeurons;
-            var outputNeuronCount = nextLayer.OutputNeurons.Count();
-            var result = new double[inputNeuronCount];
-            for (int i = 0; i < inputNeuronCount; i++)
+            var result = new double[hiddenLayer.NeuronsCount];
+            for (int i = 0; i < hiddenLayer.NeuronsCount; i++)
             {
-                var activation = inputNeurons.ElementAt(i).Activator.
+                var activation = hiddenLayer.Activator.
                     Derivative(outputsData.ElementAt(i));
-                var weights = new double[outputNeuronCount];
-                for (int j = 0; j < outputNeuronCount; j++)
+                var weights = new double[nextLayer.NeuronsCount];
+                for (int j = 0; j < nextLayer.NeuronsCount; j++)
                 {
-                    weights[j] = outputNeurons.ElementAt(j).Weights[i];
+                    weights[j] = nextLayer.Weights.ElementAt(j).ElementAt(i);
                 }
                 var cost = GetCostSecondDerivative(weights, gradients);
                 result[i] = cost * activation;
             }
-            lock(gradientsData)
+            for (int i = 0; i < hiddenLayer.NeuronsCount; ++i)
             {
-                for (int i = 0; i < inputNeuronCount; ++i)
+                gradientsData.BiasesGradients[i] += result[i];
+                for (int j = 0; j < inputsData.Count(); ++j)
                 {
-                    gradientsData.BiasesGradients[i] += result[i];
-                    for (int j = 0; j < inputsData.Count(); ++j)
-                    {
-                        gradientsData.WeightsGradients[i][j] += result[i] *
-                            inputsData.ElementAt(j);
-                    }
+                    gradientsData.WeightsGradients[i][j] += result[i] *
+                        inputsData.ElementAt(j);
                 }
             }
             return result;
@@ -227,18 +213,16 @@ namespace NeuralNetworks.Trainers
         private void UpdateLayerWeightsAndBias(OutputNeuralLayer layer,
             GradientsData gradientsData/**, double weightDecay**/)
         {
-            var outputNeuronsCount = layer.OutputNeurons.Count();
-            var inputNeuronsCount = layer.Linker.InputNeurons.Count();
+            var outputNeuronsCount = layer.NeuronsCount;
+            var inputNeuronsCount = layer.LinksCount;
             for (var i = 0; i < outputNeuronsCount; ++i)
             {
-                var neuron = layer.OutputNeurons.ElementAt(i);
-
                 /**var biasVelocity = gradientsData.BiasVelocities[i] *
                         Momentum - gradientsData.BiasGradients[i] *
                         LearningRate;
                 gradientsData.BiasVelocities[i] = biasVelocity;
                 neuron.Bias += biasVelocity;**/
-                neuron.Bias -= LearningRate * gradientsData.BiasesGradients[i];
+                layer.Biases[i] -= LearningRate * gradientsData.BiasesGradients[i];
                 for (var j = 0; j < inputNeuronsCount; ++j)
                 {
                     /**var weightVelocity = gradientsData.WeightsVelocities[i][j] *
@@ -247,7 +231,7 @@ namespace NeuralNetworks.Trainers
                     gradientsData.WeightsVelocities[i][j] = weightVelocity;
                     neuron.Weights[j] = neuron.Weights[j] *
                         weightDecay + weightVelocity;**/
-                    neuron.Weights[j] -= LearningRate *
+                    layer.Weights[i][j] -= LearningRate *
                         gradientsData.WeightsGradients[i][j];
                 }
             }
@@ -272,5 +256,9 @@ namespace NeuralNetworks.Trainers
                 }
             }
         }
+
+        private bool CheckEpochNecessity(double totalError, int epochesCount) =>
+            (MaximumError == null || totalError > MaximumError) &&
+            (EpochsCount == null || epochesCount < EpochsCount);
     }
 }

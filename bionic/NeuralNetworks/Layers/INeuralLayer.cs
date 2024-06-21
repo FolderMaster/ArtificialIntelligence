@@ -1,9 +1,11 @@
-﻿using NeuralNetworks.Neurons;
-
-namespace NeuralNetworks.Layers
+﻿namespace NeuralNetworks.Layers
 {
     public interface INeuralLayer
     {
-        public IEnumerable<INeuron> Neurons { get; }
+        public int NeuronsCount { get; }
+
+        public IEnumerable<double> Values { get; }
+
+        public event EventHandler<IEnumerable<double>> Activated;
     }
 }

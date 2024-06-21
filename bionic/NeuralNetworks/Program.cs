@@ -1,5 +1,5 @@
-﻿using NeuralNetworks.Network;
-using NeuralNetworks.Neurons.Activators;
+﻿using NeuralNetworks.Layers.Activators;
+using NeuralNetworks.Network;
 using NeuralNetworks.Trainers;
 using NeuralNetworks.Trainers.Costs;
 
@@ -10,9 +10,9 @@ Print(neuronNetwork);
 
 var data = GetData(10000);
 var input = data.Select((d) => new double[]
-{ d.Item1.X, d.Item1.Y }).ToArray();
+    { d.Item1.X, d.Item1.Y }).ToArray();
 var target = data.Select((d) => new double[]
-{ d.Item2.Quarter1, d.Item2.Quarter2,
+    { d.Item2.Quarter1, d.Item2.Quarter2,
         d.Item2.Quarter3, d.Item2.Quarter4 }).ToArray();
 var trainer = new BackPropagationNeuralNetworkTrainer()
 {
@@ -20,8 +20,8 @@ var trainer = new BackPropagationNeuralNetworkTrainer()
     Input = input,
     NeuralNetwork = neuronNetwork,
     LearningRate = 1,
-    EpochsCount = 100,
-    MaximumError = 0.01,
+    EpochsCount = 1000,
+    MaximumError = 0.005,
     Cost = MSECost.Current
 };
 trainer.Train();
@@ -49,7 +49,7 @@ void Print(NeuralNetwork neuronNetwork)
     var inputLayers = neuronNetwork.InputLayer;
     Console.WriteLine("Intput layer:");
     Console.WriteLine($"Neurons: {neuronNetwork.
-        InputLayer.Neurons.Count()}");
+        InputLayer.NeuronsCount}");
     Console.WriteLine();
     Console.WriteLine();
 
@@ -58,13 +58,12 @@ void Print(NeuralNetwork neuronNetwork)
     {
         Console.WriteLine($"Output layer {i + 1}:");
         var layer = outputLayers.ElementAt(i);
-        for (var j = 0; j < layer.Neurons.Count(); ++j)
+        for (var j = 0; j < layer.NeuronsCount; ++j)
         {
-            var neuron = layer.OutputNeurons.ElementAt(j);
             Console.WriteLine($"Neuron {j + 1}:");
-            Console.WriteLine($"Bias: {neuron.Bias}");
+            Console.WriteLine($"Bias: {layer.Biases.ElementAt(j)}");
             Console.WriteLine($"Weights: {string.Join(", ",
-                neuron.Weights)}");
+                layer.Weights.ElementAt(j))}");
             Console.WriteLine();
         }
         Console.WriteLine();
