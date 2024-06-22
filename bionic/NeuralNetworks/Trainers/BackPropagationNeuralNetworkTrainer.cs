@@ -16,6 +16,8 @@ namespace NeuralNetworks.Trainers
 
         public double LearningRate { get; set; } = 0.05;
 
+        public double GradientClip { get; set; } = 5;
+
         /** public double Momentum { get; set; } = 0.9; **/
 
         /** public double Regularization { get; set; } = 0.15; **/
@@ -183,23 +185,40 @@ namespace NeuralNetworks.Trainers
             {
                 for (var i = 0; i < gradientsData.BiasesGradients.Length; ++i)
                 {
-                    gradientsData.BiasesGradients[i] /= dataCount;
+                    gradientsData.BiasesGradients[i] =
+                        FixGradientValue(gradientsData.BiasesGradients[i], dataCount);
                 }
 
                 for (var i = 0; i < gradientsData.WeightsGradients.Length; ++i)
                 {
                     for (var j = 0; j < gradientsData.WeightsGradients[i].Length; ++j)
                     {
-                        gradientsData.WeightsGradients[i][j] /= dataCount;
+                        gradientsData.WeightsGradients[i][j] =
+                            FixGradientValue(gradientsData.WeightsGradients[i][j], dataCount);
                     }
                 }
             }
+        }
+
+        private double FixGradientValue(double value, int dataCount)
+        {
+            var result = value / dataCount;
+            if(Math.Abs(result) > GradientClip)
+            {
+                if(result > 0)
+                {
+                    return GradientClip;
+                }
+                return -GradientClip;
+            }
+            return result;
         }
 
         private void UpdateWeightsAndBias
             (IEnumerable<GradientsData> layersGradientsData)
         {
             /**var weightDecay = (1 - Regularization * LearningRate);**/
+            
             var data = NeuralNetwork.OutputLayers.Zip(layersGradientsData);
             foreach(var value in data)
             {
@@ -220,6 +239,7 @@ namespace NeuralNetworks.Trainers
                         LearningRate;
                 gradientsData.BiasVelocities[i] = biasVelocity;
                 neuron.Bias += biasVelocity;**/
+                
                 layer.Biases[i] -= LearningRate * gradientsData.BiasesGradients[i];
                 for (var j = 0; j < inputNeuronsCount; ++j)
                 {

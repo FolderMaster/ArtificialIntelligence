@@ -19,9 +19,10 @@ var trainer = new BackPropagationNeuralNetworkTrainer()
     Target = target,
     Input = input,
     NeuralNetwork = neuronNetwork,
-    LearningRate = 0.05,
+    LearningRate = 0.1,
+    GradientClip = 10,
     EpochsCount = null,
-    MaximumError = 0.01,
+    MaximumError = 0.05,
     Cost = CrossEntropyCost.Current
 };
 trainer.Train();
