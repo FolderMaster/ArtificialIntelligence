@@ -4,7 +4,7 @@ using NeuralNetworks.Trainers;
 using NeuralNetworks.Trainers.Costs;
 
 var neuronNetwork = new NeuralNetwork(2);
-neuronNetwork.AddLayer(2, TanhActivator.Current);
+neuronNetwork.AddLayer(2, SoftSignActivator.Current);
 neuronNetwork.AddLayer(4, SoftMaxActivator.Current);
 Print(neuronNetwork);
 

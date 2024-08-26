@@ -136,7 +136,7 @@ namespace NeuralNetworks.Trainers
             return result;
         }
 
-        public double GetCostSecondDerivative
+        private double GetCostSecondDerivative
             (IEnumerable<double> weights,
             IEnumerable<double> gradients)
         {
@@ -202,6 +202,10 @@ namespace NeuralNetworks.Trainers
 
         private double FixGradientValue(double value, int dataCount)
         {
+            if (double.IsNaN(value))
+            {
+                return 0;
+            }
             var result = value / dataCount;
             if(Math.Abs(result) > GradientClip)
             {
@@ -218,7 +222,6 @@ namespace NeuralNetworks.Trainers
             (IEnumerable<GradientsData> layersGradientsData)
         {
             /**var weightDecay = (1 - Regularization * LearningRate);**/
-            
             var data = NeuralNetwork.OutputLayers.Zip(layersGradientsData);
             foreach(var value in data)
             {
